@@ -10,6 +10,8 @@ services:
       - "5432:5432"
     volumes:
       - catalogue_pgdata:/var/lib/postgresql/data
+    networks:
+      - default
 
   catalogue-service:
     build: .
@@ -21,8 +23,20 @@ services:
       DB_URL: jdbc:postgresql://postgres:5432/catalogue_db
       DB_USER: catalogue_user
       DB_PASSWORD: catalogue_pass
+      RABBIT_HOST: booking-rabbitmq
+      RABBIT_PORT: 5672
+      RABBIT_USER: guest
+      RABBIT_PASSWORD: guest
     ports:
       - "8081:8081"
+    networks:
+      - default
+      - shared
 
 volumes:
   catalogue_pgdata:
+
+networks:
+  shared:
+    external: true
+    name: gestione-risorse-net
