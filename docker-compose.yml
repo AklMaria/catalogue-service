@@ -10,8 +10,6 @@ services:
       - "5432:5432"
     volumes:
       - catalogue_pgdata:/var/lib/postgresql/data
-    networks:
-      - default
 
   catalogue-service:
     build: .
@@ -30,7 +28,6 @@ services:
     ports:
       - "8081:8081"
     networks:
-      - default
       - shared
 
 volumes:
@@ -39,4 +36,4 @@ volumes:
 networks:
   shared:
     external: true
-    name: gestione-risorse-net
+    name: gestione-risorse-net  //ho creato questa rete condivisa perche anche questo service deve contattare rabbit mq
